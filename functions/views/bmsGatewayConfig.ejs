@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css">
+
+  </HEAD>
+
+  <body align="center" class="backendimg">
+  <% include header1.ejs %>
+  <form action="/DataRetrieval/bmsgateway" class="form-container" method="post">
+
+      <div>
+        <h1>Gateway Configuration</h1>
+        <label for="node"><b>Gateway :</b></label>
+        <input type="text" id="Gateway" name="oldGateway" value="<%= bmsData.gateway_arr[id] %>"readonly>
+
+            <h2>Name</h2>
+            <label for="gatewayname"><b>New Name :</b></label>
+            <input type="text" placeholder="Enter new name" name="gatewayName" value="<%= bmsData.gateway_arr[id]%>" required>
+<p>
+    <br />    <button type="submit" class="btn">Save</button>
+        <button type="button" class="btn cancel" onclick="location.href='./bms'">Close</button>
+</p>
+    </div>
+  </form>
+  <% include footer.ejs %>
+  </body>
+  </HTML>

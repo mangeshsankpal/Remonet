@@ -1,0 +1,95 @@
+<!-- keep this file in views folder inside the project's folder -->
+<HTML>
+
+<HEAD>
+
+  <title>ReMoNet</title>
+  <!--  <meta http-equiv="refresh" content="5" > -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  <style>
+
+    .canvastag{
+      width : 100%;
+      height : 100%;
+    }
+  </style>
+</HEAD>
+
+<BODY>
+
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">Machine Graphs</h1>
+
+<div class = "canvastag">
+    <canvas id="myChart"></canvas>
+</div>
+  <script>
+
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+          labels: <%- JSON.stringify(x.dateTime) %>,
+          datasets: [{
+              label: 'Tool Temperature',
+              data: <%- JSON.stringify(x.tooltemperature) %>,
+
+              backgroundColor:
+                  'rgba(0, 0, 255, 0.2)'
+              ,
+
+              borderColor:
+                  'rgba(0, 0, 255,1)'
+              ,
+              borderWidth: 1
+          }
+        ]
+      }
+  }).resize();
+  </script>
+  <div class = "formtag">
+    <form action="/DataRetrieval/showgraphs" method="POST">
+      <div class="container">
+        <p align="center">
+          <label for="time"><b>Field Type</b></label>
+          <select id="fieldType" name="fieldType">
+            <option value="vibration">Vibration</option>
+            <option value="tooltemperature" selected="Tool Temperature">Tool Temperature</option>
+          </select>
+        </p>
+        <p align="center">
+          <label for="date"><b>Date</b></label>
+          <input type="date" placeholder="Enter date" id="date" name="date" value="x.date">
+        </p>
+        <p align="center">
+          <label for="time"><b>From Time</b></label>
+          <input type="time" placeholder="Enter time" id="fromTime" name="fromTime" required value="x.fromTime">
+        </p>
+        <p align="center">
+          <label for="time"><b>To Time</b></label>
+          <input type="time" placeholder="Enter time" id="toTime" name="toTime" required value="x.toTime">
+        </p>
+        <p align="center">
+          <label for="time"><b>Select graph</b></label>
+          <select id="chartType" name="chartType">
+            <option value="bar" selected="Bar Chart">Bar Chart</option>
+            <option value="line">Line Chart</option>
+          </select>
+        </p>
+        <p align="center">
+          <input type="submit" value="Get Graph">
+        </p>
+      </div>
+    </form>
+  </div>
+
+
+    <% include footer.ejs %>
+</BODY>
+
+</HTML>

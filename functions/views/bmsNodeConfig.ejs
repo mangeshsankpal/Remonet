@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css">
+
+  </HEAD>
+
+  <body align="center" class="backendimg">
+  <% include header1.ejs %>
+  <form action="/DataRetrieval/bmsnode" class="form-container" method="post">
+
+      <div>
+        <h1>Node Configuration</h1>
+        <label for="node"><b>Node :</b></label>
+        <input type="text" id="Node" name="Node" value="<%= bmsData.node_arr[id] %>"readonly>
+
+            <h2>Temperature</h2>
+            <label for="lowerlimit"><b>Lower Limit</b></label>
+            <input type="number" placeholder="Enter Lower Limit" name="LLTemperature" value="<%= bmsData.temp_lower[++id]%>" required>
+
+            <label for="upperlimit"><b>Upper Limit</b></label>
+            <input type="number" placeholder="Enter Upper Limit" name="ULTemperature" value="<%= bmsData.temp_upper[id]%>" required>
+
+            <h2>Relative Humidity</h2>
+            <label for="lowerlimit"><b>Lower Limit</b></label>
+            <input type="number" placeholder="Enter Lower Limit" name="LLRelativeHumidity" value="<%= bmsData.rh_lower[id]%>" required>
+
+            <label for="upperlimit"><b>Upper Limit</b></label>
+            <input type="number" placeholder="Enter Upper Limit" name="ULRelativeHumidity" value="<%= bmsData.rh_upper[id]%>" required>
+
+            <h2>Ambient Light</h2>
+            <label for="lowerlimit"><b>Lower Limit</b></label>
+            <input type="number" placeholder="Enter Lower Limit" name="LLAmbientLight" value="<%= bmsData.al_lower[id]%>" required>
+
+            <label for="upperlimit"><b>Upper Limit</b></label>
+            <input type="number" placeholder="Enter Upper Limit" name="ULAmbientLight" value="<%= bmsData.al_upper[id]%>" required>
+<p>
+    <br />
+        <button type="submit" name="Save" class="btn">Save</button>
+        <button type="button" class="btn cancel" onclick="location.href='./bms'">Close</button>
+        <button type="submit" name="Remove" class="btn">Remove Filters</button>
+</p>
+    </div>
+  </form>
+  <% include footer.ejs %>
+  </body>
+  </HTML>

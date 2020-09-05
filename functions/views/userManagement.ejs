@@ -1,0 +1,156 @@
+<HTML>
+
+  <HEAD>
+
+    <!-- <meta http-equiv="refresh" content="05"/> -->
+    <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </HEAD>
+
+  <body>
+    <% include header2.ejs %>
+
+
+      <h1 align="center" class="heading1">Users Status</h1>
+      <div class="dropdown" >
+      <button  class="dropbtn" >Filter</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="Filter('All')">All</a>
+        <a href="#" onclick="Filter('Pending')">Pending</a>
+        <a href="#" onclick="Filter('Active')">Active</a>
+        <a href="#" onclick="Filter('Inactive')">Inactive</a>
+      </div>
+    </div>
+    <table align="center" cellspacing="20" id="data">
+      <% include messages.ejs %>
+
+      <tr class="columns">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Designation</th>
+        <th>Contact</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Action</th>
+
+        <% for(var i in userData.fname){%>
+        <% if(userData.approve[i] == false && userData.reject[i] == false){ %>
+      </tr>
+
+      <tr>
+
+        <td class="ralign"><%= userData.fname[i] %></td>
+        <td class="ralign"><%= userData.lname[i] %></td>
+        <td class="ralign"><%= userData.email[i] %></td>
+        <td class="ralign"><%= userData.designation[i] %></td>
+        <td class="ralign"><%= userData.contact[i] %></td>
+        <td class="ralign">
+          <select id="<%= i %>" name="role">
+            <option value="admin">Admin</option>
+            <option value="user" selected>User</option>
+          </select>
+        </td>
+        <td class="ralign">Pending</td>
+        <td class="ralign"><input type="Button" onclick="Approve('<%= i %>','<%= userData.email[i] %>')" value="Approve"/></td>
+
+      </tr>
+
+      <%}
+         else if(userData.approve[i] == true && userData.reject[i] == false){ %>
+         </tr>
+
+         <tr>
+
+           <td class="ralign"><%= userData.fname[i] %></td>
+           <td class="ralign"><%= userData.lname[i] %></td>
+           <td class="ralign"><%= userData.email[i] %></td>
+           <td class="ralign"><%= userData.designation[i] %></td>
+           <td class="ralign"><%= userData.contact[i] %></td>
+           <td class="ralign"><%= userData.role[i] %></td>
+           <td class="ralign">Active</td>
+           <td class="ralign"><a href="../users/deactivation?email=<%=userData.email[i] %>">
+            <input type="Button" value="Deactivate"/> </a></td>
+
+         </tr>
+
+
+          <%}else if(userData.approve[i] == false && userData.reject[i] == true){ %>
+
+          </tr>
+
+          <tr>
+
+            <td class="ralign"><%= userData.fname[i] %></td>
+            <td class="ralign"><%= userData.lname[i] %></td>
+            <td class="ralign"><%= userData.email[i] %></td>
+            <td class="ralign"><%= userData.designation[i] %></td>
+            <td class="ralign"><%= userData.contact[i] %></td>
+            <td class="ralign"><%= userData.role[i] %></td>
+            <td class="ralign">Inactive</td>
+            <td class="ralign"><a href="../users/activation?email=<%=userData.email[i] %>">
+              <input type="Button" value="Activate"/> </a></td>
+
+          </tr>
+
+            <%}%>
+         <%}%>
+      </tr>
+    </table>
+
+    <script>
+      function Filter(input) {
+        var filter, table, tr, td, i, txtValue;
+
+        filter = input;
+        table = document.getElementById("data");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[6];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if(!(filter.localeCompare("All")))
+            {
+              tr[i].style.display ="";
+            }
+            else if (txtValue.indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+    <script>
+
+ function Approve(rl,ele)
+   {
+
+      var role = document.getElementById(rl).value;
+
+         var email = ele;
+
+       window.location.href="../users/approval?role="+role+"&email="+email;
+      }
+
+     </script>
+    <% include footer.ejs %>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+
+  </body>
+
+  </HTML>

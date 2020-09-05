@@ -1,0 +1,56 @@
+<HTML>
+
+<HEAD>
+  <!-- <meta http-equiv="refresh" content="05"/> -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  </script>
+</HEAD>
+
+<body>
+
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">Asset Tracking</h1>
+  <table align="center" cellspacing="20" id="data">
+    <tr class="columns">
+      <th><input type="checkbox"  onclick="toggle(this)"/>Select all</th>
+      <script>
+      function toggle(source) {
+        checkboxes = document.getElementsByName('c');
+        if (source.checked) {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = true;
+                 }
+             }
+         } else {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 console.log(i)
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = false;
+                 }
+             }
+         }
+      }
+      </script>
+      <th>Gateway</th>
+      <th>Tag</th>
+      <th>Signal</th>
+      <th>Time</th>
+
+      <% for(var i in assettrackdata.gateway){%>
+    <tr>
+      <td class="calign"><input type="checkbox" name = "c"/></td>
+      <td class="ralign"><%= assettrackdata.gateway[i] %></td>
+      <td class="ralign"><%= assettrackdata.tag[i] %></td>
+      <td class="ralign"><%= assettrackdata.signal[i] %></td>
+      <td class="calign"><%= assettrackdata.datetime[i] %></td>
+      <%}%>
+    </tr>
+  </table>
+
+  <% include footer1.ejs %>
+
+</body>
+
+</HTML>

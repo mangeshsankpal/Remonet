@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="../style1.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body  class="backendimg">
+<% include header.ejs %>
+
+<div class="row">
+
+  <div class="column left">
+    <p class="info">The project is designed for industrial application.
+     It aims at designing a flexible product for tracking various industrial assets like raw material, human resources, consumable products, finished products, etc. Also other attributes of the asset can be managed and viewed through desktop application or mobile app.
+   </p>
+  </div>
+
+  <div class="column right" style="background-color:#ccc;">
+    <% include messages.ejs %>
+    <form action="/users/login" method="POST">
+
+      <div class="signin">
+           <p>Sign In</p>
+      </div>
+
+      <div class="container">
+        <p align="center">
+          <label for="email"><b>Username</b></label>
+          <input type="text" placeholder="Enter email" id="email" name="email">
+        </p>
+        <p align="center">
+          <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" id="password" name="password" required>
+        </p>
+        <p align="center">
+          <input class="button" type="submit" value="Login">
+        </p>
+        <p align="center">
+          <span class="psw">Forgot<a href="/users/passReset">password ?</a></span>
+        </p>
+        <p align="center">
+          Not Regitered? Click here to <a href="/signup">Sign Up</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<% include footer.ejs %>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<HTML>
+
+<HEAD>
+  <!-- <meta http-equiv="refresh" content="05"/> -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  <style>
+  .open-button {
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    right: 28px;
+    width: 280px;
+  }
+
+  /* The popup form - hidden by default */
+  .form-popup {
+    display: none;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+  }
+
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+  }
+
+  /* Full-width input fields */
+  .form-container input[type=number]{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=number]:focus{
+    background-color: #ddd;
+    outline: none;
+  }
+
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    font-size: 25px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+
+  }
+
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+
+  }
+
+  .hover_bkgr_fricc{
+    background:rgba(0,0,0,.4);
+    cursor:pointer;
+    display:none;
+    height:100%;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index:10000;
+}
+.hover_bkgr_fricc .helper{
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+.hover_bkgr_fricc > div {
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
+}
+.popupCloseButton {
+    background-color: #fff;
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 25px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+.popupCloseButton:hover {
+    background-color: #ccc;
+}
+.trigger_popup_fricc {
+    cursor: pointer;
+    margin: 20px;
+    display: inline-block;
+    font-weight: bold;
+    color: white;
+}
+
+  /* Add some hover effects to buttons */
+
+</style>
+</HEAD>
+
+<body>
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">Machine Data</h1>
+  <button class="button" type="button" onclick="location.href='assetGraphs'">Get Graph</button>
+  <table align="center" cellspacing="20" id="data">
+    <tr class="columns">
+      <th><input type="checkbox" onclick="toggle(this)"/>Select all</th>
+      <script>
+      function toggle(source) {
+        checkboxes = document.getElementsByName('c');
+        if (source.checked) {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = true;
+                 }
+             }
+         } else {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 console.log(i)
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = false;
+                 }
+             }
+         }
+      }
+      </script>
+      </script>
+      <th><a href="javascript:window.open('/underConst','Gateway Configuration','width=400,height=150')" class="acolor">Gateway</a></th>
+      <th><a href="/displaynode1" onClick="alert('Under Construction')" class="acolor">Node</a></th>
+      <th>DateTime</th>
+      <th>Location</th>
+      <th>Machine</th>
+      <th>LocationX</th>
+      <th>LocationY</th>
+      <th>Vibration</th>
+      <th><a href="#" class="trigger_popup_fricc" onclick="openForm()">Tool Temperature</a></th>
+      <div class="hover_bkgr_fricc" id="myForm">
+        <form action="/DataRetrieval/displaynode1s" class="form-container" method="post">
+
+          <span class="helper"></span>
+            <div>
+              <h1>Set Limits</h1>
+                  <label for="lowerlimit"><b>Lower Limit</b></label>
+                  <input type="number" placeholder="Enter Lower Limit" name="LowerLimit" value="<%= limits.lowerlimits%>" required>
+
+                  <label for="upperlimit"><b>Upper Limit</b></label>
+                  <input type="number" placeholder="Enter Upper Limit" name="UpperLimit" value="<%= limits.upperlimits%>" required>
+
+
+              <button type="submit" class="btn">Save</button>
+              <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+          </div>
+
+
+        </form>
+      </div>
+      <script>
+       function openForm() {document.getElementById("myForm").style.display = "block";}
+      function closeForm() {document.getElementById("myForm").style.display = "none";}
+
+      </script>
+      <% for(var i in limits.gateway){%>
+      <% if(limits.node[i] == "2001"){ %>
+    <tr>
+      <td class="calign"><input type="checkbox" name = "c"/></td>
+      <td class="ralign"><%= limits.gateway[i] %></td>
+      <td class="ralign"><%= limits.node[i] %></td>
+      <td class="calign"><%= limits.dateTime[i] %></td>
+      <td class="lalign"><%= limits.location[i] %></td>
+      <td class="lalign"><%= limits.machine[i] %></td>
+
+      <% if(limits.locationX[i] < 60){ %>
+      <td class="ralign">
+        <font color="blue"><%= limits.locationX[i] %></font>
+      </td>
+      <% }else if(limits.locationX[i] >60){ %>
+      <td class="ralign">
+        <font color="red"><%= limits.locationX[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= limits.locationX[i] %></font>
+      </td>
+      <% }%>
+
+      <% if(limits.locationY[i] < 80){ %>
+      <td class="ralign">
+        <font color="blue"><%= limits.locationY[i] %></font>
+      </td>
+      <% }else if(limits.locationY[i] > 80){ %>
+      <td class="ralign">
+        <font color="red"><%= limits.locationY[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= limits.locationY[i] %></font>
+      </td>
+      <% }%>
+
+      <% if(limits.vibration[i] < 30){ %>
+      <td class="ralign">
+        <font color="blue"><%= limits.vibration[i] %></font>
+      </td>
+      <% }else if(limits.vibration[i] > 60){ %>
+      <td class="ralign">
+        <font color="red"><%= limits.vibration[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= limits.vibration[i] %></font>
+      </td>
+      <% }%>
+
+      <% if(limits.tooltemperature[i] < limits.lowerlimits){ %>
+      <td class="ralign">
+        <font color="blue"><%= limits.tooltemperature[i] %></font>
+      </td>
+      <% }else if(limits.tooltemperature[i] > limits.upperlimits){ %>
+      <td class="ralign">
+        <font color="red"><%= limits.tooltemperature[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= limits.tooltemperature[i] %></font>
+      </td>
+      <% }%>
+    </tr>
+    <%}%>
+<%}%>
+    </tr>
+  </table>
+
+  <% include footer.ejs %>
+</body>
+
+</HTML>

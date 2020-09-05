@@ -1,0 +1,91 @@
+<HTML>
+
+<HEAD>
+  <!-- <meta http-equiv="refresh" content="05"/> -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  </script>
+</HEAD>
+
+<body>
+
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">Trolly Data</h1>
+  <button class="button" type="button" onclick="location.href='assetGraphs'">Get Graph</button>
+  <table align="center" cellspacing="20" id="data">
+    <tr class="columns">
+      <th><input type="checkbox"  onclick="toggle(this)"/>Select all</th>
+      <script>
+      function toggle(source) {
+        checkboxes = document.getElementsByName('c');
+        if (source.checked) {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = true;
+                 }
+             }
+         } else {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 console.log(i)
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = false;
+                 }
+             }
+         }
+      }
+      </script>
+      <th>Gateway</th>
+      <th>Node</th>
+      <th>DateTime</th>
+      <th>Location</th>
+      <th>Machine</th>
+      <th>LocationX</th>
+      <th>LocationY</th>
+
+      <% for(var i in assetData2.gateway){%>
+      <% if(assetData2.node[i] == "2002" || assetData2.node[i] == "2003"){ %>
+    <tr>
+      <td class="calign"><input type="checkbox" name = "c"/></td>
+      <td class="ralign"><%= assetData2.gateway[i] %></td>
+      <td class="ralign"><%= assetData2.node[i] %></td>
+      <td class="calign"><%= assetData2.dateTime[i] %></td>
+      <td class="lalign"><%= assetData2.location[i] %></td>
+      <td class="lalign"><%= assetData2.machine[i] %></td>
+      <% if(assetData2.locationX[i] < -50){ %>
+      <td class="ralign">
+        <font color="blue"><%= assetData2.locationX[i] %></font>
+      </td>
+      <% }else if(assetData2.locationX[i] >80){ %>
+      <td class="ralign">
+        <font color="red"><%= assetData2.locationX[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= assetData2.locationX[i] %></font>
+      </td>
+      <% }%>
+
+      <% if(assetData2.locationY[i] < -50){ %>
+      <td class="ralign">
+        <font color="blue"><%= assetData2.locationY[i] %></font>
+      </td>
+      <% }else if(assetData2.locationY[i] > 80){ %>
+      <td class="ralign">
+        <font color="red"><%= assetData2.locationY[i] %></font>
+      </td>
+      <% } else { %>
+      <td class="ralign">
+        <font color="green"><%= assetData2.locationY[i] %></font>
+      </td>
+      <% }%>
+    </tr>
+    <%}%>
+<%}%>
+    </tr>
+  </table>
+
+  <% include footer1.ejs %>
+
+</body>
+
+</HTML>

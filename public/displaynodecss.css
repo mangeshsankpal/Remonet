@@ -1,0 +1,177 @@
+div.padding{
+  padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.footer_div {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #4d75b7;
+  color: white;
+  text-align: right;
+}
+
+.footer1_div {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #4d75b7;
+  color: white;
+  text-align: right;
+}
+
+.columns{
+  margin-bottom: 100px;
+}
+.buttons{
+  margin-top: 150px;
+  float: center;
+  width: 100%;
+  position: absolute;
+}
+.button {
+  background-color: #4d75b7;
+  border: none;
+  color: white;
+  padding: 20px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 30px;
+  cursor: pointer;
+  width: 150px;
+  height: 100px;
+}
+
+.copyright_link {
+  color: white;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #4d75b7;
+  color: white;
+}
+
+.topnav a {
+  float: right;
+  color:  white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color:  #cccccc;
+  color: black;
+}
+.topnav a.active{
+  background-color: #5cd65c;
+  color: white;
+}
+#data {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: auto;
+}
+
+#data td, #data th {
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+#data tr{background-color: #9999ff;}
+
+#data tr:hover {background-color: #ddd;}
+
+#data th {
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: center;
+float : center;
+background-color: #000099;
+color: white;
+flex-wrap: wrap;
+}
+
+.checkbox{
+  text-align: center;
+  background-color: white;
+}
+.ralign{
+text-align: right;
+flex-wrap: wrap;
+}
+.calign{
+text-align: center;
+flex-wrap: wrap;
+}
+.lalign{
+text-align: left;
+flex-wrap: wrap;
+}
+.acolor{
+color: white;
+}
+
+.headerimg {
+background-image: url("remonet-header.png");
+background-repeat: no-repeat;
+background-size: auto;
+width: 100%;
+height: 100px;
+}
+
+
+.heading1 {
+color: black;
+}
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}

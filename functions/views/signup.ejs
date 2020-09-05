@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../style1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body align="center" class="backendimg">
+<% include header.ejs %>
+
+<div class="row">
+
+  <div class="column left">
+    <p class="info">The project is designed for industrial application.
+     It aims at designing a flexible product for tracking various industrial assets like raw material, human resources, consumable products, finished products, etc. Also other attributes of the asset can be managed and viewed through desktop application or mobile app.
+   </p>
+  </div>
+
+  <div class="column right" style="background-color:#ccc;">
+    <% include messages.ejs %>
+    <form action="/users/register" method="POST">
+
+      <div class="signup">
+           <p>Sign Up</p>
+      </div>
+
+      <div class="container">
+        <p align="right" class="signup-align">
+          <label for="fname">First Name</label>
+          <input type="text" placeholder="Enter First name" id="fname" name="fname" value="<%= typeof fname != 'undefined' ? fname : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="lname">Last name</label>
+          <input type="text" placeholder="Enter Last name" id="lname" name="lname" value="<%= typeof lname != 'undefined' ? lname : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="email">Email</label>
+          <input type="text" placeholder="Enter email" id="email" name="email" value="<%= typeof email != 'undefined' ? email : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="designation">Designation</label>
+          <input type="text" placeholder="Enter designation" id="designation" name="designation" value="<%= typeof designation != 'undefined' ? designation : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="contact">Contact</label>
+          <input type="text" placeholder="Enter contact" id="contact" name="contact" value="<%= typeof contact != 'undefined' ? contact : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="password">Password</label>
+          <input type="password" placeholder="Enter password" id="password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>">
+        </p>
+        <p align="right" class="signup-align">
+          <label for="password2">Confirm Password</label>
+          <input type="password" placeholder="Enter Confirm password" name="password2" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+        </p>
+        <p align="center">
+          <input class="btn" type="submit" value="Register">
+          <input type="button" onClick = "location.href = './';" name="Cancel" value="Cancel">
+        </p>
+        <p align="center">
+          <span class="psw">Already have account ?<a href="./">Login</a></span>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<% include footer.ejs %>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css">
+
+  </HEAD>
+
+  <body align="center" class="backendimg">
+  <% include header1.ejs %>
+  <form action="/DataRetrieval/assetnode" class="form-container" method="post">
+
+      <div>
+        <h1>Node Configuration</h1>
+        <label for="node"><b>Node :</b></label>
+        <input type="text" id="Node" name="Node" value="<%= assetData.node_arr[id] %>"readonly>
+
+            <h2>Tool Temperature</h2>
+            <label for="lowerlimit"><b>Lower Limit</b></label>
+            <input type="number" placeholder="Enter Lower Limit" name="LLToolTemperature" value="<%= assetData.tooltemp_lower[++id]%>" required>
+
+            <label for="upperlimit"><b>Upper Limit</b></label>
+            <input type="number" placeholder="Enter Upper Limit" name="ULToolTemperature" value="<%= assetData.tooltemp_upper[id]%>" required>
+
+            <h2>Vibration</h2>
+            <label for="lowerlimit"><b>Lower Limit</b></label>
+            <input type="number" placeholder="Enter Lower Limit" name="LLVibration" value="<%= assetData.vibration_lower[id]%>" required>
+
+            <label for="upperlimit"><b>Upper Limit</b></label>
+            <input type="number" placeholder="Enter Upper Limit" name="ULVibration" value="<%= assetData.vibration_upper[id]%>" required>
+
+<p>
+    <br />    <button type="submit" name="Save" class="btn">Save</button>
+        <button type="button" class="btn cancel" onclick="location.href='./displaynode1'">Close</button>
+        <button type="submit" name="Remove" class="btn">Remove Filters</button>
+</p>
+    </div>
+  </form>
+  <% include footer.ejs %>
+  </body>
+  </HTML>

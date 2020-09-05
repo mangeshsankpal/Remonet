@@ -1,0 +1,104 @@
+<!-- keep this file in views folder inside the project's folder -->
+<HTML>
+
+<HEAD>
+
+  <title>ReMoNet</title>
+  <!--  <meta http-equiv="refresh" content="5" > -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  <style>
+
+    .canvastag{
+      width : 40%;
+      height : 50px;
+    }
+  </style>
+</HEAD>
+
+<BODY>
+
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">BMS Graphs</h1>
+
+<div class = "canvastag">
+    <canvas id="myChart" width="10" height="10"></canvas>
+</div>
+  <script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+
+  var myChart = new Chart(ctx, {
+      type: <%- JSON.stringify(y.chart) %>,
+      data: {
+          labels: <%- JSON.stringify(y.dateTime) %>,
+          datasets: [{
+              label: <%- JSON.stringify(y.fieldtype) %>,
+              data: <%- JSON.stringify(y.graphdata) %>,
+
+              backgroundColor:
+                  'rgba(255, 0, 0, 0.2)'
+              ,
+
+              borderColor:
+                  'rgba(255,0,0,1)'
+              ,
+              borderWidth: 1
+          }
+        ]
+      }
+  });
+  </script>
+  <div class = "formtag">
+    <form action="/DataRetrieval/showBMSgraphs" method="POST">
+
+      <div class="container">
+        <p align="center">
+          <select id="fieldType" name="fieldType" >
+            <% if(y.fieldtype == "ambientLight"){ %>
+            <option value="relativeHumidity" >Relative Humidity</option>
+            <option value="ambientLight" selected="<%= y.fieldtype%>">Ambient Light</option>
+            <% } else { %>
+            <option value="relativeHumidity"  selected="<%= y.fieldtype%>">Relative Humidity</option>
+            <option value="ambientLight">Ambient Light</option>
+            <% }%>
+          </select>
+        </p>
+        <p align="center">
+          <label for="date"><b>date</b></label>
+          <input type="date" placeholder="Enter date" id="date" name="date" value="<%= y.date%>">
+        </p>
+        <p align="center">
+          <label for="time"><b>From Time</b></label>
+          <input type="time" placeholder="Enter time" id="fromTime" name="fromTime" value="<%= y.fromTime%>" required>
+        </p>
+        <p align="center">
+          <label for="time"><b>To Time</b></label>
+          <input type="time" placeholder="Enter time" id="toTime" name="toTime" value="<%= y.toTime%>" required>
+        </p>
+        <p align="center">
+          <label for="time"><b>Select graph</b></label>
+          <select id="chartType" name="chartType" >
+            <% if(y.chartType == "line"){ %>
+            <option value="bar" >Bar Chart</option>
+            <option value="line" selected="<%= y.chartType%>">Line Chart</option>
+            <% } else { %>
+              <option value="bar"  selected="<%= y.chartType%>">Bar Chart</option>
+              <option value="line">Line Chart</option>
+            <% }%>
+          </select>
+        </p>
+        <p align="center">
+          <input class="btn" type="submit" value="Get Graph ">
+        </p>
+      </div>
+
+    </form>
+  </div>
+    <% include footer.ejs %>
+</BODY>
+
+</HTML>

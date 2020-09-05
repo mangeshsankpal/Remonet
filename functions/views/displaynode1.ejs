@@ -1,0 +1,318 @@
+<HTML>
+
+<HEAD>
+  <!-- <meta http-equiv="refresh" content="05"/> -->
+  <link href="../displaynodecss.css" rel="stylesheet" type="text/css" />
+  <style>
+  .open-button {
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    right: 28px;
+    width: 280px;
+  }
+
+  /* The popup form - hidden by default */
+  .form-popup {
+    display: none;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+  }
+
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    /* padding: 10px; */
+    background-color: white;
+    left:0;
+  }
+
+  /* Full-width input fields */
+  .form-container input[type=number]{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=number]:focus{
+    background-color: #ddd;
+    outline: none;
+  }
+
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: red;
+  }
+  .hover_bkgr_fricc{
+    background:rgba(0,0,0,.4);
+    cursor:pointer;
+    display:none;
+    height:100%;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index:10000;
+}
+.hover_bkgr_fricc .helper{
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+.hover_bkgr_fricc > div {
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
+}
+.popupCloseButton {
+    background-color: #fff;
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 25px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+.popupCloseButton:hover {
+    background-color: #ccc;
+}
+.trigger_popup_fricc {
+    cursor: pointer;
+    margin: 20px;
+    display: inline-block;
+    font-weight: bold;
+    color: white;
+}
+/*Drop Down Css*/
+
+.dropbtn {
+  background-color: #4d75b7;
+  border: none;
+  color: white;
+  padding: 20px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 30px;
+  cursor: pointer;
+  width: 150px;
+  height: 100px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: sticky;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 80px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+  /* Add some hover effects to buttons */
+
+</style>
+</HEAD>
+
+<body>
+  <% include header1.ejs %>
+
+  <h1 align="center" class="heading1">Machine Data</h1>
+  <div class="dropdown" >
+  <button  class="dropbtn" >Node Management</button>
+  <div class="dropdown-content">
+
+    <% for(var i in assetData.node_arr){%>
+      <a href="../DataRetrieval/assetnodeParams?id=<%=i %>" class="trigger_popup_fricc"><%= assetData.node_arr[i] %></a>
+    <%}%>
+  </div>
+  </div>
+  <div class="dropdown" >
+  <button  class="dropbtn" >Gateway Management</button>
+  <div class="dropdown-content">
+    <% for(var i in assetData.gateway_arr){%>
+      <a href="../DataRetrieval/assetgatewayParams?id=<%=i %>" class="trigger_popup_fricc"><%= assetData.gateway_arr[i] %></a>
+    <%}%>
+  </div>
+  </div>
+
+  <button class="dropbtn" type="button" onclick="location.href='assetGraphs'">Data Visualization</button>
+
+
+  <table align="center" cellspacing="20" id="data">
+    <col width = auto>
+    <tr class="columns">
+      <th><input type="checkbox" onclick="toggle(this)"/>Select all</th>
+
+      <th>Gateway</th>
+      <th>Node</th>
+      <th>DateTime</th>
+      <th>Location</th>
+      <th>Machine</th>
+      <th>Location</th>
+      <th><a href="#" class="trigger_popup_fricc" onclick="openFormTooltemp()">Tool Temperature</a></th>
+      <div class="hover_bkgr_fricc" id="myForm_tooltemp">
+        <form action="/DataRetrieval/displaynode1tooltemp" class="form-container" method="post">
+
+          <span class="helper"></span>
+            <div>
+              <h1>Set Limits</h1>
+                  <label for="lowerlimit"><b>Lower Limit</b></label>
+                  <input type="number" placeholder="Enter Lower Limit" name="LowerLimitTooltemp" value="<%= assetData.tooltemp_lower[0]%>" required>
+
+                  <label for="upperlimit"><b>Upper Limit</b></label>
+                  <input type="number" placeholder="Enter Upper Limit" name="UpperLimitTTooltemp" value="<%= assetData.tooltemp_upper[0]%>" required>
+
+
+              <button type="submit" class="btn">Save</button>
+              <button type="button" class="btn cancel" onclick="closeFormTooltemp()">Close</button>
+          </div>
+        </form>
+      </div>
+          <th><a href="#" class="trigger_popup_fricc" onclick="openFormVibration()">Vibration</a></th>
+          <div class="hover_bkgr_fricc" id="myForm_vibration">
+            <form action="/DataRetrieval/displaynode1vibration" class="form-container" method="post">
+
+              <span class="helper"></span>
+                <div>
+                  <h1>Set Limits</h1>
+                      <label for="lowerlimit"><b>Lower Limit</b></label>
+                      <input type="number" placeholder="Enter Lower Limit" name="LowerLimitVibration" value="<%= assetData.vibration_lower[0]%>" required>
+
+                      <label for="upperlimit"><b>Upper Limit</b></label>
+                      <input type="number" placeholder="Enter Upper Limit" name="UpperLimitVibration" value="<%= assetData.vibration_upper[0]%>" required>
+
+
+                  <button type="submit" class="btn">Save</button>
+                  <button type="button" class="btn cancel" onclick="closeFormVibration()">Close</button>
+              </div>
+            </form>
+          </div>
+      <script>
+       function openFormTooltemp() {document.getElementById("myForm_tooltemp").style.display = "block";}
+      function closeFormTooltemp() {document.getElementById("myForm_tooltemp").style.display = "none";}
+      function openFormVibration() {document.getElementById("myForm_vibration").style.display = "block";}
+     function closeFormVibration() {document.getElementById("myForm_vibration").style.display = "none";}
+      </script>
+      <script>
+      function toggle(source) {
+        checkboxes = document.getElementsByName('c');
+        if (source.checked) {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = true;
+                 }
+             }
+         } else {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 console.log(i)
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = false;
+                 }
+             }
+         }
+      }
+      </script>
+      <% for(var i in assetData.gateway){%>
+
+        <% var k = 0;%>
+        <%for(var j = 0; j < assetData.node_arr.length; j++){%>
+          <% if(assetData.node[i] === assetData.node_arr[j]){%>
+            <% k = j + 1; %>
+            <%break;%>
+          <%}%>
+        <%}%>
+    <tr>
+      <td class="calign"><input type="checkbox" name = "c"/></td>
+      <td class="ralign"><%= assetData.gateway[i] %></td>
+      <td class="ralign"><%= assetData.node[i] %></td>
+      <td class="calign"><%= assetData.dateTime[i] %></td>
+      <td class="lalign"><%= assetData.location[i] %></td>
+      <td class="lalign"><%= assetData.machine[i] %></td>
+
+      <td class="ralign">(<%= assetData.locationX[i]%>,<%= assetData.locationY[i]%>)</td>
+
+      <% if(assetData.tooltemperature[i] < assetData.tooltemp_lower[k]){ %>
+      <td class="ralign"><font color="blue"><%= assetData.tooltemperature[i] %></font></td>
+    <% }else if(assetData.tooltemperature[i] > assetData.tooltemp_upper[k]){ %>
+      <td class="ralign"><font color="red"><%= assetData.tooltemperature[i] %></font></td>
+    <% } else { %>
+      <td class="ralign"><font color="green"><%= assetData.tooltemperature[i] %></font></td>
+    <% }%>
+
+    <% if(assetData.vibration[i] < assetData.vibration_lower[k]){ %>
+      <td class="ralign"><font color="blue"><%= assetData.vibration[i] %></font></td>
+    <% }else if(assetData.vibration[i] > assetData.vibration_upper[k]){ %>
+      <td class="ralign"><font color="red"><%= assetData.vibration[i] %></font></td>
+    <% } else { %>
+      <td class="ralign"><font color="green"><%= assetData.vibration[i] %></font></td>
+    <% }%>
+
+    </tr>
+
+    <%}%>
+
+    </tr>
+  </table>
+
+  <% include footer1.ejs %>
+</body>
+
+</HTML>
